@@ -1,0 +1,15 @@
+services:
+  vgm-etf-bridge:
+    build: .
+    container_name: vgm-etf-bridge
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ${HOST_DATA_DIR:-/opt/vgm-etf-bridge}:/data
+      - ${HOST_SSH_DIR:-/home/vgm-consultancy/.ssh}:/root/.ssh:ro
+    healthcheck:
+      test: ["CMD", "python", "-m", "vgm_bridge.cli", "healthcheck"]
+      interval: 60s
+      timeout: 10s
+      retries: 3

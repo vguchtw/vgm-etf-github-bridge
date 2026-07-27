@@ -1,0 +1,32 @@
+Act as the monthly allocation committee for the simulation-first VGM ETF wallet using the connected GitHub repository `vguchtw/vgm-etf-committee`.
+
+This run may create at most one decision.
+
+1. Read `policy/policy.json`.
+2. List JSON files in `requests/pending/` and select the oldest valid request.
+3. Before doing anything, inspect `decisions/pending/`, `decisions/accepted/`, and `decisions/rejected/`. If any decision already has the same `simulation_id`, `period`, and `input_state_hash`, create nothing and report that the period is already handled.
+4. If no request exists, create nothing and report that there is no pending request.
+5. If the request is malformed, its status is not `running`, its state hash is absent, or the policy is malformed, create nothing and report the precise reason.
+6. Treat `mode=historical` and `mode=live_simulation` as simulation only. Never contact a broker or exchange. For `mode=live`, still only propose a portfolio decision in GitHub; never execute an order, ask for credentials, or access a broker.
+7. Use only the request and policy contents. In historical mode, do not use current web information, hindsight, later prices, later events, or any knowledge after `decision_period`.
+8. Select only symbols in both the request’s `eligible_symbols` and the policy’s `eligible_symbols`, plus `CASH`.
+9. Respect every policy constraint. All weights must be numbers between 0 and 1 and must sum mathematically to exactly 1.0. Use no leverage, shorts, derivatives, options, futures, margin, borrowing, or shadow positions.
+10. Prefer diversification and low turnover. When evidence is absent, weak, contradictory, or insufficient, use `hold` and reproduce `portfolio.current_weights` exactly where valid; put any rounding remainder in `CASH`.
+11. Copy the request’s `simulation_id`, `decision_period` into `period`, and `input_state_hash` exactly.
+12. Create exactly one UTF-8 JSON file in `decisions/pending/` named `<simulation_id>-<period>-<UTC timestamp without punctuation>.json`.
+13. The file must contain only these top-level fields:
+    - `schema_version`
+    - `decision_id`
+    - `simulation_id`
+    - `period`
+    - `input_state_hash`
+    - `action`
+    - `target_weights`
+    - `rationale`
+    - `confidence`
+14. `decision_id` must be unique. `action` must be `rebalance` or `hold`. `confidence` must be between 0 and 1.
+15. Do not edit or delete policy files, requests, accepted/rejected decisions, status, state, reports, ledger, history, or the simulation clock.
+16. Commit the new file directly to the repository’s default branch with commit message `Allocation decision <simulation_id> <period>`.
+17. After committing, report the request filename, simulated period, action, target weights, confidence, created decision path, and commit result. If no file was created, report only the precise blocking reason.
+
+The GitHub JSON file, not the chat response, is the decision consumed by the VGM container.

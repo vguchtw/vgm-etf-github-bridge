@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "simulation_id": "vgm-etf-10y-001",
+  "base_currency": "EUR",
+  "initial_cash": 10000.0,
+  "historical_start": "2016-07-01",
+  "historical_end": "2026-07-01",
+  "eligible_etfs": [
+    "VWCE.DE",
+    "EUNL.DE",
+    "IUSN.DE",
+    "AGGH.DE"
+  ],
+  "initial_weights": {
+    "CASH": 1.0
+  },
+  "request_ttl_hours": 48,
+  "max_decision_age_hours": 72,
+  "live_exchange_adapter": null
+}
