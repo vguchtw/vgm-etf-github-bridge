@@ -1,35 +1,36 @@
-# Secrets
-.env
-.env.*
-!.env.example
-*.pem
-*.key
 
-# Python
+# Archives and temporary files
+/config.json
+data/
+.DS_Store
+.env
+!.env.example
+history/
+.idea/
+# IDE and OS
+*.key
+# Local runtime configuration
+# Local runtime data
+# Local secrets and runtime configuration
+# Local secrets and runtime files
+*.log
+logs/
+.mypy_cache/
+*.pem
+/policy.json
 __pycache__/
 *.py[cod]
 .pytest_cache/
-.mypy_cache/
-.venv/
-venv/
-
-# IDE and OS
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db
-
-# Local runtime data
-data/
-state/
-history/
-reports/
-logs/
+# Python
 repo/
-
-# Archives and temporary files
-*.zip
+reports/
+# Runtime repositories and state
+# Secrets
+state/
 *.tar
 *.tar.gz
-*.log
+Thumbs.db
 *.tmp
+.venv/
+.vscode/
+*.zip
