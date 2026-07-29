@@ -4,11 +4,13 @@
 data/
 .DS_Store
 .env
+.env.backup.*
 !.env.example
 history/
 .idea/
 # IDE and OS
 *.key
+# Local environment backups
 # Local runtime configuration
 # Local runtime data
 # Local secrets and runtime configuration

@@ -7,7 +7,6 @@ services:
       - .env
     volumes:
       - ${HOST_DATA_DIR:-/opt/vgm-etf-bridge}:/data
-      - ${HOST_SSH_DIR:-/home/vgm-consultancy/.ssh}:/root/.ssh:ro
     healthcheck:
       test: ["CMD", "python", "-m", "vgm_bridge.cli", "healthcheck"]
       interval: 60s
